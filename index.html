@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sistema de Vendas — JN Soluções | Controle de estoque por lote e validade</title>
+<meta name="description" content="Sistema de vendas para Windows com controle de estoque por lote e validade, lucro real por produto e relatórios que imprimem. Avaliação gratuita de 30 dias.">
+<meta name="theme-color" content="#070501">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  /* Fundo quente, não preto neutro: é o que dá o tom da página. */
+  --fundo:#070501;
+  --fundo-realce:#0c0904;
+
+  --creme:#ede8de;
+  --creme-medio:#ddd0b8;
+  --creme-fraco:#a89e90;
+
+  --laranja:#fb923c;
+  --ambar:#f59e0b;
+  --ouro:#fcd34d;
+  --destaque:linear-gradient(110deg,#fb923c 0%,#f59e0b 55%,#fcd34d 100%);
+
+  --linha:rgba(251,146,60,.14);
+  --vidro:rgba(255,255,255,.035);
+  --brilho:0 4px 32px rgba(251,146,60,.07), inset 0 1px 0 rgba(251,146,60,.12);
+
+  --raio:18px;
+  --pilula:100px;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:"Manrope",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  background:var(--fundo);
+  color:var(--creme);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:var(--laranja);text-decoration:none}
+h1,h2,h3{line-height:1.18;margin:0 0 .5em;font-weight:800;letter-spacing:-.025em;color:#fff}
+h1{font-size:clamp(2rem,4.6vw,3.4rem)}
+h2{font-size:clamp(1.6rem,3.2vw,2.4rem)}
+h3{font-size:1.12rem;letter-spacing:-.015em}
+p{margin:0 0 1em;color:var(--creme-medio)}
+
+.env{width:min(1140px,100% - 2.5rem);margin-inline:auto}
+.secao{padding:clamp(3.5rem,8vw,6rem) 0}
+.secao--cinza{
+  background:var(--fundo-realce);
+  border-block:1px solid rgba(251,146,60,.1);
+}
+
+/* Fio de luz que o tema usa para separar blocos. */
+.fio{height:1px;background:linear-gradient(90deg,transparent,rgba(251,146,60,.25),transparent)}
+
+/* ---------- topo ---------- */
+.topo{
+  position:sticky;top:0;z-index:20;
+  background:rgba(7,5,1,.82);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(251,146,60,.12);
+}
+.topo__int{display:flex;align-items:center;gap:1.5rem;padding:.75rem 0}
+.marca{display:flex;align-items:center;gap:.6rem;font-weight:800;color:#fff}
+/* A logo é escura e sumiria no fundo preto; isto a deixa branca sem editar o arquivo. */
+.marca img{height:46px;width:auto;filter:brightness(0) invert(1);opacity:.92}
+.topo nav{margin-left:auto;display:flex;gap:1.5rem;flex-wrap:wrap}
+.topo nav a{color:var(--creme-fraco);font-size:.94rem;font-weight:500;transition:color .15s}
+.topo nav a:hover{color:var(--ouro)}
+
+/* ---------- botões ---------- */
+.btn{
+  display:inline-block;padding:.95rem 1.9rem;border-radius:var(--pilula);
+  font-weight:700;font-size:1rem;border:1px solid transparent;cursor:pointer;
+  transition:transform .14s ease, box-shadow .14s ease, background .14s ease;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn--principal{
+  background:var(--destaque);
+  color:#1c1200;
+  box-shadow:0 6px 24px rgba(251,146,60,.28);
+}
+.btn--principal:hover{box-shadow:0 10px 34px rgba(251,146,60,.4)}
+.btn--zap{
+  background:transparent;color:var(--creme);
+  border-color:rgba(237,232,222,.22);
+}
+.btn--zap:hover{border-color:var(--laranja);color:var(--ouro)}
+.btns{display:flex;gap:.85rem;flex-wrap:wrap;margin-top:2rem}
+
+/* ---------- herói ---------- */
+.heroi{
+  position:relative;overflow:hidden;
+  padding:clamp(4rem,9vw,7rem) 0 clamp(3.5rem,8vw,6rem);
+  border-bottom:1px solid rgba(251,146,60,.1);
+}
+/* Halo quente atrás do título, como na referência. */
+.heroi::before{
+  content:"";position:absolute;inset:-40% 20% auto -10%;height:75%;
+  background:radial-gradient(60% 60% at 30% 40%,rgba(251,146,60,.14),transparent 70%);
+  pointer-events:none;
+}
+.heroi > .env{position:relative}
+.selo{
+  display:inline-flex;align-items:center;gap:.55rem;
+  background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.28);
+  border-radius:var(--pilula);
+  padding:.4rem 1rem;font-size:.85rem;font-weight:600;color:var(--ouro);
+  margin-bottom:1.4rem;
+}
+.selo b{color:var(--laranja)}
+.heroi p.chamada{font-size:clamp(1.03rem,1.6vw,1.2rem);color:var(--creme-medio);max-width:60ch}
+.heroi p.chamada b{color:var(--creme);font-weight:700}
+
+/* Moldura das telas: as capturas são claras e precisam de borda quente
+   para não brilharem soltas sobre o preto. */
+.moldura{
+  border:1px solid rgba(251,146,60,.18);border-radius:14px;overflow:hidden;
+  box-shadow:0 20px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.03);
+  background:#0f0b06;
+}
+
+/* ---------- destaques ---------- */
+.cartoes{display:grid;gap:1.2rem;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.cartao{
+  background:var(--vidro);border:1px solid var(--linha);border-radius:var(--raio);
+  padding:1.7rem;box-shadow:var(--brilho);
+}
+.cartao .icone{
+  width:42px;height:42px;border-radius:12px;display:grid;place-items:center;
+  font-size:1.15rem;margin-bottom:1rem;
+  background:rgba(251,146,60,.13);color:var(--laranja);
+  border:1px solid rgba(251,146,60,.2);
+}
+.cartao h3{color:#fff}
+.cartao p{margin:0;color:var(--creme-fraco);font-size:.95rem}
+
+/* ---------- recursos alternados ---------- */
+.recurso{display:grid;gap:clamp(1.8rem,4vw,3.5rem);align-items:center;grid-template-columns:1fr}
+.recurso + .recurso{margin-top:clamp(3.5rem,7vw,5.5rem)}
+@media (min-width:900px){
+  .recurso{grid-template-columns:1fr 1.25fr}
+  .recurso--invertido .recurso__texto{order:2}
+  .recurso--invertido .recurso__figura{order:1}
+}
+.olho{
+  text-transform:uppercase;letter-spacing:.12em;font-size:.75rem;font-weight:800;
+  margin-bottom:.7rem;
+  background:var(--destaque);-webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.recurso ul{margin:0;padding-left:1.15rem;color:var(--creme-fraco)}
+.recurso li{margin-bottom:.5rem}
+.recurso li::marker{color:var(--laranja)}
+.recurso li b{color:var(--creme)}
+
+/* ---------- galeria ---------- */
+.galeria{display:grid;gap:1.5rem;grid-template-columns:repeat(auto-fit,minmax(310px,1fr))}
+/* Recorta pelo topo: é onde está o conteúdo das telas, e uniformiza a grade —
+   sem isso a Nova Venda vira um bloco cinza, porque o grid dela fica vazio. */
+.tela img{aspect-ratio:16/10;object-fit:cover;object-position:top center}
+.tela figcaption{font-size:.9rem;color:var(--creme-fraco);padding-top:.85rem}
+.tela figcaption b{color:#fff;display:block;font-size:1rem;margin-bottom:.15rem}
+
+/* ---------- avaliação ---------- */
+.avaliacao{display:grid;gap:2.5rem;align-items:start}
+@media (min-width:900px){.avaliacao{grid-template-columns:1.15fr .85fr}}
+.passos{list-style:none;margin:0;padding:0;counter-reset:passo}
+.passos li{counter-increment:passo;position:relative;padding-left:3.2rem;margin-bottom:1.5rem}
+.passos li::before{
+  content:counter(passo);position:absolute;left:0;top:-1px;
+  width:2.1rem;height:2.1rem;border-radius:50%;display:grid;place-items:center;
+  background:var(--destaque);color:#1c1200;font-weight:800;font-size:.9rem;
+}
+.passos b{display:block;color:#fff}
+.passos span{color:var(--creme-fraco);font-size:.95rem}
+
+.nota{
+  background:rgba(251,146,60,.06);
+  border:1px solid rgba(251,146,60,.2);
+  border-left:3px solid var(--laranja);
+  border-radius:var(--raio);padding:1.4rem 1.6rem;
+}
+.nota h3{margin-bottom:.45rem;color:var(--ouro)}
+.nota p{margin:0;color:var(--creme-medio);font-size:.95rem}
+.nota p b{color:#fff}
+
+/* ---------- requisitos ---------- */
+.requisitos{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));margin-top:2.2rem}
+.requisito{
+  border:1px solid var(--linha);border-radius:14px;padding:1.15rem 1.35rem;
+  background:var(--vidro);
+}
+.requisito b{display:block;font-size:.95rem;color:#fff}
+.requisito span{color:var(--creme-fraco);font-size:.9rem}
+
+/* ---------- contato ---------- */
+.contato{position:relative;overflow:hidden;text-align:center;background:var(--fundo-realce)}
+.contato::before{
+  content:"";position:absolute;inset:auto -10% -60% -10%;height:120%;
+  background:radial-gradient(50% 50% at 50% 30%,rgba(251,146,60,.16),transparent 70%);
+  pointer-events:none;
+}
+.contato > .env{position:relative}
+.contato p{color:var(--creme-medio);max-width:56ch;margin-inline:auto}
+.contato .btns{justify-content:center}
+.assinatura{margin-top:2.4rem;font-size:.95rem;color:var(--creme-fraco)}
+.assinatura b{color:#fff}
+.assinatura a{color:var(--ouro);text-decoration:underline}
+
+/* ---------- aviso pós-download ---------- */
+.veu{
+  position:fixed;inset:0;z-index:50;display:none;
+  align-items:center;justify-content:center;padding:1.5rem;
+  background:rgba(3,2,0,.78);backdrop-filter:blur(6px);
+}
+.veu[data-aberto="1"]{display:flex}
+.dialogo{
+  background:var(--fundo-realce);
+  border:1px solid rgba(251,146,60,.22);
+  border-radius:var(--raio);
+  box-shadow:0 30px 80px rgba(0,0,0,.7), var(--brilho);
+  max-width:580px;width:100%;max-height:90vh;overflow-y:auto;
+  padding:clamp(1.6rem,4vw,2.4rem);
+  position:relative;
+}
+.dialogo h3{font-size:1.4rem;margin-bottom:.3rem}
+.dialogo > p{color:var(--creme-fraco);font-size:.95rem}
+.dialogo .passos{margin-top:1.6rem}
+.dialogo .passos li{margin-bottom:1.2rem}
+.dialogo .passos li:last-child{margin-bottom:0}
+.dialogo .passos b{font-size:1rem}
+.dialogo .passos span{font-size:.93rem}
+.rotulo{
+  display:inline-block;background:rgba(251,146,60,.14);
+  border:1px solid rgba(251,146,60,.3);border-radius:6px;
+  padding:.05rem .45rem;font-weight:700;color:var(--ouro);font-size:.9em;
+}
+.porque{
+  margin-top:1.6rem;padding-top:1.2rem;
+  border-top:1px solid rgba(251,146,60,.14);
+  font-size:.9rem;color:var(--creme-fraco);
+}
+.porque b{color:var(--creme)}
+.fechar{
+  position:absolute;top:.9rem;right:1rem;
+  background:none;border:0;color:var(--creme-fraco);
+  font-size:1.6rem;line-height:1;cursor:pointer;padding:.2rem .5rem;border-radius:8px;
+}
+.fechar:hover{color:var(--ouro);background:rgba(251,146,60,.1)}
+.dialogo .btns{margin-top:1.8rem}
+
+/* ---------- rodapé ---------- */
+.rodape{padding:2.2rem 0;font-size:.88rem;color:var(--creme-fraco);border-top:1px solid rgba(251,146,60,.1)}
+.rodape__int{display:flex;gap:1rem;flex-wrap:wrap;justify-content:space-between}
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="env topo__int">
+    <a class="marca" href="#"><img src="img/logo.png" alt="JN Soluções"></a>
+    <nav>
+      <a href="#recursos">Recursos</a>
+      <a href="#telas">Telas</a>
+      <a href="#avaliacao">Avaliação</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="heroi">
+  <div class="env">
+    <span class="selo"><b>●</b> Avaliação gratuita de 30 dias</span>
+    <h1>Venda, estoque e validade sob controle — no seu computador.</h1>
+    <p class="chamada">
+      Sistema de vendas para Windows com controle de estoque <b>por lote e validade</b>,
+      lucro real calculado sobre o custo de cada lote e relatórios que saem em papel,
+      PDF ou Excel. Funciona sem internet e os dados ficam com você.
+    </p>
+    <div class="btns">
+      <!-- Coloque o instalador na mesma pasta deste site para o link funcionar. -->
+      <a class="btn btn--principal" href="https://github.com/Joel92246405/sistema-vendas/releases/latest/download/SistemaVendas_Setup_Trial.exe" data-baixar>Baixar avaliação de 30 dias</a>
+      <a class="btn btn--zap" href="https://wa.me/5516992467589" target="_blank" rel="noopener">Falar no WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<section class="secao secao--cinza">
+  <div class="env">
+    <div class="cartoes">
+      <article class="cartao">
+        <div class="icone">◆</div>
+        <h3>Lucro que é lucro</h3>
+        <p>O custo de cada item fica congelado no momento da venda. Reajustar o preço de compra depois não muda o lucro que já aconteceu.</p>
+      </article>
+      <article class="cartao">
+        <div class="icone">▣</div>
+        <h3>Lote e validade</h3>
+        <p>Cada entrada vira um lote com custo e validade próprios. O sistema avisa o que está vencendo e quanto isso representa em dinheiro.</p>
+      </article>
+      <article class="cartao">
+        <div class="icone">▤</div>
+        <h3>Relatórios de verdade</h3>
+        <p>Seis relatórios gerenciais com totais, impressão com pré-visualização, PDF pelo Windows e exportação que o Excel abre direto.</p>
+      </article>
+      <article class="cartao">
+        <div class="icone">⛭</div>
+        <h3>Sem depender da internet</h3>
+        <p>Banco de dados local. Cai a internet, você continua vendendo. Backup e restauração ficam no menu, à mão.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="secao" id="recursos">
+  <div class="env">
+
+    <div class="recurso">
+      <div class="recurso__texto">
+        <div class="olho">Painel de indicadores</div>
+        <h2>A situação do negócio na abertura</h2>
+        <p>O sistema abre mostrando faturamento e lucro do mês, vendas do dia, ticket médio e os alertas de estoque — sem você pedir nada.</p>
+        <ul>
+          <li><b>Comparação com o mês anterior</b>, para saber se está subindo ou caindo.</li>
+          <li><b>Gráfico dos últimos 12 meses</b>, com o valor exato ao passar o mouse.</li>
+          <li><b>Mais vendidos do mês</b>, para saber o que sustenta o caixa.</li>
+        </ul>
+      </div>
+      <figure class="recurso__figura moldura">
+        <a href="img/inicial.png" target="_blank" rel="noopener">
+          <img src="img/inicial.png" alt="Painel com cartões de faturamento, lucro, vendas do dia, ticket médio e alertas de estoque" loading="lazy">
+        </a>
+      </figure>
+    </div>
+
+    <div class="recurso recurso--invertido">
+      <div class="recurso__texto">
+        <div class="olho">Relatórios gerenciais</div>
+        <h2>Seis relatórios, três saídas</h2>
+        <p>Faturamento por período, lucro por produto, lucro por lote, ranking de clientes em curva ABC, estoque mínimo e lotes a vencer.</p>
+        <ul>
+          <li><b>Na tela</b>, com totais e colunas ordenáveis.</li>
+          <li><b>Impresso ou em PDF</b>, com pré-visualização antes de gastar papel.</li>
+          <li><b>Em Excel</b>, para continuar a conta na planilha.</li>
+        </ul>
+      </div>
+      <figure class="recurso__figura moldura">
+        <a href="img/relatorios.png" target="_blank" rel="noopener">
+          <img src="img/relatorios.png" alt="Tela de relatórios mostrando faturamento por período com totais e formas de pagamento" loading="lazy">
+        </a>
+      </figure>
+    </div>
+
+    <div class="recurso">
+      <div class="recurso__texto">
+        <div class="olho">Impressão</div>
+        <h2>Sai pronto para entregar</h2>
+        <p>Cabeçalho com o período, colunas alinhadas, totais no rodapé e o resumo com as conclusões. Numerado e identificado com quem emitiu.</p>
+        <ul>
+          <li>PDF pela impressora <b>Microsoft Print to PDF</b>, que já vem no Windows.</li>
+          <li>Folha <b>A4</b>, mesmo quando a impressora padrão é a de cupom.</li>
+        </ul>
+      </div>
+      <figure class="recurso__figura moldura">
+        <a href="img/relatorio-impresso.png" target="_blank" rel="noopener">
+          <img src="img/relatorio-impresso.png" alt="Relatório de faturamento impresso em A4, com totais e resumo" loading="lazy">
+        </a>
+      </figure>
+    </div>
+
+    <div class="recurso recurso--invertido">
+      <div class="recurso__texto">
+        <div class="olho">Venda</div>
+        <h2>Rápida, e sem vender o que não tem</h2>
+        <p>A venda mostra o lucro de cada item enquanto você monta o pedido. Se o produto controla lote, o sistema exige um lote com saldo — e avisa quando não há.</p>
+        <ul>
+          <li>Atalhos de teclado: <b>F4</b> adiciona item, <b>F5</b> finaliza.</li>
+          <li>Baixa automática no estoque e no lote escolhido.</li>
+          <li>Cancelamento devolve o saldo ao lote de origem.</li>
+        </ul>
+      </div>
+      <figure class="recurso__figura moldura">
+        <a href="img/vendas-valida-lote.png" target="_blank" rel="noopener">
+          <img src="img/vendas-valida-lote.png" alt="Tela de nova venda avisando que não há lote com saldo disponível para o produto" loading="lazy">
+        </a>
+      </figure>
+    </div>
+
+    <div class="recurso">
+      <div class="recurso__texto">
+        <div class="olho">Estoque</div>
+        <h2>O que falta e o que está vencendo</h2>
+        <p>Posição de estoque contra o mínimo configurado, e a lista de lotes por data de validade com o valor que está em risco de virar perda.</p>
+        <ul>
+          <li>Alerta de <b>estoque mínimo</b> por produto.</li>
+          <li>Janela de vencimento configurável, em dias.</li>
+          <li>Custo de reposição somado, para virar lista de compra.</li>
+        </ul>
+      </div>
+      <figure class="recurso__figura moldura">
+        <a href="img/controla-estoque.png" target="_blank" rel="noopener">
+          <img src="img/controla-estoque.png" alt="Tela de controle de estoque com posição dos produtos e lotes por validade" loading="lazy">
+        </a>
+      </figure>
+    </div>
+
+  </div>
+</section>
+
+<section class="secao secao--cinza" id="telas">
+  <div class="env">
+    <h2>Todas as telas</h2>
+    <p style="max-width:60ch">Clique para ver em tamanho real. As imagens usam uma base de demonstração; os dados não são de clientes reais.</p>
+
+    <div class="galeria" style="margin-top:2.2rem">
+      <figure class="tela">
+        <a class="moldura" href="img/consultaVendas.png" target="_blank" rel="noopener" style="display:block">
+          <img src="img/consultaVendas.png" alt="Consulta de vendas com filtro por período e itens da venda selecionada" loading="lazy">
+        </a>
+        <figcaption><b>Consulta de Vendas</b>Filtra por período, mostra os itens de cada venda e permite cancelar devolvendo o estoque.</figcaption>
+      </figure>
+
+      <figure class="tela">
+        <a class="moldura" href="img/vendas.png" target="_blank" rel="noopener" style="display:block">
+          <img src="img/vendas.png" alt="Tela de nova venda com itens lançados, lote, validade e lucro por item" loading="lazy">
+        </a>
+        <figcaption><b>Nova Venda</b>Lote, validade e lucro visíveis item a item enquanto o pedido é montado.</figcaption>
+      </figure>
+
+      <figure class="tela">
+        <a class="moldura" href="img/produtos.png" target="_blank" rel="noopener" style="display:block">
+          <img src="img/produtos.png" alt="Cadastro de produtos com preço de custo, preço de venda e estoque mínimo" loading="lazy">
+        </a>
+        <figcaption><b>Produtos</b>Preço de custo e de venda, unidade, estoque mínimo e controle de lote por produto.</figcaption>
+      </figure>
+
+      <figure class="tela">
+        <a class="moldura" href="img/clientes.png" target="_blank" rel="noopener" style="display:block">
+          <img src="img/clientes.png" alt="Cadastro de clientes com busca por nome, documento ou cidade" loading="lazy">
+        </a>
+        <figcaption><b>Clientes</b>Busca por nome, documento ou cidade. Histórico de compras ligado à consulta de vendas.</figcaption>
+      </figure>
+
+      <figure class="tela">
+        <a class="moldura" href="img/relatorios.png" target="_blank" rel="noopener" style="display:block">
+          <img src="img/relatorios.png" alt="Tela de relatórios gerenciais" loading="lazy">
+        </a>
+        <figcaption><b>Relatórios</b>Seis relatórios com atalhos de período e saída para papel, PDF ou Excel.</figcaption>
+      </figure>
+
+      <figure class="tela">
+        <a class="moldura" href="img/controla-estoque.png" target="_blank" rel="noopener" style="display:block">
+          <img src="img/controla-estoque.png" alt="Controle de estoque e validade dos lotes" loading="lazy">
+        </a>
+        <figcaption><b>Estoque</b>Posição contra o mínimo e lotes ordenados pela validade mais próxima.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="secao" id="avaliacao">
+  <div class="env">
+    <h2>Experimente por 30 dias</h2>
+
+    <div class="avaliacao" style="margin-top:2.2rem">
+      <div>
+        <ol class="passos">
+          <li>
+            <b>Baixe e instale</b>
+            <span>O instalador confere o que falta na máquina e avisa antes de começar. Não precisa de servidor nem de conta em lugar nenhum.</span>
+          </li>
+          <li>
+            <b>Entre e use</b>
+            <span>A tela de login já vem preenchida com o usuário da avaliação. Todos os recursos ficam liberados, sem parte bloqueada.</span>
+          </li>
+          <li>
+            <b>Decida sem pressa</b>
+            <span>O sistema mostra quantos dias restam a cada abertura. Terminando o prazo, é só falar comigo para liberar.</span>
+          </li>
+        </ol>
+
+        <div class="btns">
+          <a class="btn btn--principal" href="https://github.com/Joel92246405/sistema-vendas/releases/latest/download/SistemaVendas_Setup_Trial.exe" data-baixar>Baixar agora</a>
+        </div>
+      </div>
+
+      <div>
+        <figure class="moldura" style="margin:0 0 1.6rem">
+          <img src="img/aviso-avaliacao.png" alt="Aviso da versão de avaliação mostrando os dias restantes" loading="lazy">
+        </figure>
+
+        <div class="nota">
+          <h3>Seus dados nunca ficam reféns</h3>
+          <p>
+            Se o prazo acabar e você não continuar, o sistema deixa de aceitar
+            <b>vendas e compras novas</b> — só isso. Consultar o que já foi lançado,
+            emitir relatórios e gerar backup continuam funcionando. Nada é apagado.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="requisitos">
+      <div class="requisito"><b>Windows 10 ou superior</b><span>64 bits</span></div>
+      <div class="requisito"><b>SQL Server LocalDB</b><span>Gratuito; o instalador avisa se faltar</span></div>
+      <div class="requisito"><b>~500 MB livres</b><span>Programa e banco de dados</span></div>
+      <div class="requisito"><b>Sem internet</b><span>Necessária só para baixar</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="fio"></div>
+
+<section class="secao contato" id="contato">
+  <div class="env">
+    <h2>Ficou com dúvida? Fala comigo.</h2>
+    <p>Atendimento direto com quem desenvolve o sistema — sem fila, sem chamado, sem robô.</p>
+
+    <div class="btns">
+      <a class="btn btn--principal" href="https://wa.me/5516992467589" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+      <a class="btn btn--zap" href="mailto:joelmnascimento88@gmail.com?subject=Sistema%20de%20Vendas">Mandar e-mail</a>
+    </div>
+
+    <p class="assinatura">
+      <b>Joel Nascimento</b> — Desenvolvedor<br>
+      WhatsApp <a href="https://wa.me/5516992467589" target="_blank" rel="noopener">(16) 99246-7589</a>
+      &nbsp;·&nbsp;
+      <a href="mailto:joelmnascimento88@gmail.com">joelmnascimento88@gmail.com</a>
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer class="rodape">
+  <div class="env rodape__int">
+    <span>© JN Soluções — Sistema de Vendas</span>
+    <span>As telas mostram dados de demonstração, não de clientes reais.</span>
+  </div>
+</footer>
+
+<!-- Aparece depois do clique em baixar. O download acontece do mesmo jeito:
+     este aviso só explica a tela do Windows que vem a seguir. -->
+<div class="veu" id="veuInstalacao" role="dialog" aria-modal="true" aria-labelledby="tituloAviso">
+  <div class="dialogo">
+    <button class="fechar" type="button" data-fechar aria-label="Fechar">&times;</button>
+
+    <h3 id="tituloAviso">O download começou</h3>
+    <p>São 50 MB. Enquanto baixa, leia isto — vai te poupar um susto.</p>
+
+    <ol class="passos">
+      <li>
+        <b>Abra o arquivo baixado</b>
+        <span>Procure <b>SistemaVendas_Setup_Trial.exe</b> na pasta Downloads e dê dois cliques.</span>
+      </li>
+      <li>
+        <b>O Windows vai avisar</b>
+        <span>Aparece uma tela azul dizendo <i>“O Windows protegeu o seu computador”</i>.
+        Clique em <span class="rotulo">Mais informações</span>.</span>
+      </li>
+      <li>
+        <b>Clique em Executar assim mesmo</b>
+        <span>O botão <span class="rotulo">Executar assim mesmo</span> só aparece depois
+        do passo anterior. A instalação segue normal daí em diante.</span>
+      </li>
+    </ol>
+
+    <p class="porque">
+      <b>Por que esse aviso?</b> O Windows exibe essa tela para todo programa novo que
+      ainda não comprou um certificado de assinatura digital. Ele não diz que há vírus —
+      diz que ainda não conhece o programa. Se preferir, me chame no WhatsApp e eu
+      acompanho a instalação com você.
+    </p>
+
+    <div class="btns">
+      <a class="btn btn--zap" href="https://wa.me/5516992467589" target="_blank" rel="noopener">Preciso de ajuda</a>
+      <button class="btn btn--principal" type="button" data-fechar>Entendi</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var veu = document.getElementById('veuInstalacao');
+  if (!veu) return;
+
+  function abrir(){ veu.setAttribute('data-aberto','1'); }
+  function fechar(){ veu.removeAttribute('data-aberto'); }
+
+  // Sem preventDefault: o navegador baixa o arquivo e o aviso aparece por cima.
+  document.querySelectorAll('[data-baixar]').forEach(function(botao){
+    botao.addEventListener('click', function(){ setTimeout(abrir, 400); });
+  });
+
+  veu.addEventListener('click', function(e){
+    if (e.target === veu || e.target.hasAttribute('data-fechar')) fechar();
+  });
+
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') fechar();
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+# O instalador NAO entra no repositorio: sao 50 MB, o Git reclama acima de 50 MB
+# e bloqueia em 100 MB. Ele vai como anexo de Release, e o botao da pagina ja
+# aponta para /releases/latest/download/.
+*.exe
+*.msi
+*.zip
+
+# Lixo do sistema operacional
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Arquivos temporarios de conferencia
+_teste.html
+_previa.html
+_medir.html
