@@ -29,14 +29,25 @@ O GitHub Pages republica sozinho em um ou dois minutos.
 O executável **não fica neste repositório** — são 50 MB, e o Git reclama de
 arquivo desse tamanho. Ele vai como anexo de *Release*:
 
-1. Em **Releases**, crie uma release nova (ex.: tag `v1.0.1`).
-2. Anexe o instalador com o nome exato **`SistemaVendas_Setup_Trial.exe`**.
-3. Publique.
+1. Crie a tag antes, senão o campo "Choose a tag" da interface do GitHub
+   rejeita o que você digita:
 
-Os botões da página apontam para
-`/releases/latest/download/SistemaVendas_Setup_Trial.exe`, que sempre entrega o
-anexo da release mais recente. Trocar de versão é publicar outra release com o
-arquivo usando o mesmo nome — nenhuma alteração na página é necessária.
+   ```bash
+   git tag v1.0.2 && git push origin v1.0.2
+   ```
+
+2. Em **Releases** → *Draft a new release*, **selecione a tag na lista**.
+3. Anexe o instalador e espere o upload dos 50 MB terminar antes de publicar.
+4. **Atualize o nome do arquivo no `index.html`** — são três lugares, todos
+   com `SistemaVendas_Setup`: os dois botões e o texto do aviso pós-download.
+
+O link usa `/releases/latest/download/<nome-do-arquivo>`, que sempre entrega o
+anexo da release mais recente. Como o nome do arquivo carrega a versão, o passo
+4 é obrigatório a cada lançamento.
+
+> Para não precisar do passo 4 nunca mais: anexe **também** uma cópia com nome
+> fixo (`SistemaVendas_Setup_Trial.exe`) e aponte a página para ela. Aí trocar
+> de versão vira só publicar a release.
 
 ## Cuidado com os prints
 
