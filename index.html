@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sistema de Vendas — JN Soluções | Controle de estoque por lote e validade</title>
-<meta name="description" content="Sistema de vendas para Windows com controle de estoque por lote e validade, lucro real por produto e relatórios que imprimem. Avaliação gratuita de 30 dias.">
+<title>Sistema de Vendas — JN Soluções | Para pequenas lojas e pequenas empresas</title>
+<meta name="description" content="Sistema de vendas para pequenas lojas e pequenas empresas: crediário e contas a receber, estoque por lote e validade, lucro real por produto e relatórios que imprimem. Avaliação gratuita de 30 dias.">
 <meta name="theme-color" content="#070501">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -129,7 +129,9 @@ p{margin:0 0 1em;color:var(--creme-medio)}
 }
 
 /* ---------- destaques ---------- */
-.cartoes{display:grid;gap:1.2rem;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+/* 300px força três colunas na largura cheia: com os seis cartões, 230px
+   deixava a segunda fileira pela metade. */
+.cartoes{display:grid;gap:1.2rem;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
 .cartao{
   background:var(--vidro);border:1px solid var(--linha);border-radius:var(--raio);
   padding:1.7rem;box-shadow:var(--brilho);
@@ -268,6 +270,7 @@ p{margin:0 0 1em;color:var(--creme-medio)}
   <div class="env topo__int">
     <a class="marca" href="#"><img src="img/logo.png" alt="JN Soluções"></a>
     <nav>
+      <a href="#paraquem">Para quem é</a>
       <a href="#recursos">Recursos</a>
       <a href="#telas">Telas</a>
       <a href="#avaliacao">Avaliação</a>
@@ -281,15 +284,15 @@ p{margin:0 0 1em;color:var(--creme-medio)}
 <section class="heroi">
   <div class="env">
     <span class="selo"><b>●</b> Avaliação gratuita de 30 dias</span>
-    <h1>Venda, estoque e validade sob controle — no seu computador.</h1>
+    <h1>O controle que a loja pequena precisa — sem mensalidade de sistema grande.</h1>
     <p class="chamada">
-      Sistema de vendas para Windows com controle de estoque <b>por lote e validade</b>,
-      lucro real calculado sobre o custo de cada lote e relatórios que saem em papel,
-      PDF ou Excel. Funciona sem internet e os dados ficam com você.
+      Feito para <b>pequenas lojas e pequenas empresas</b>: venda, estoque por lote e validade,
+      <b>crediário com contas a receber</b>, lucro real calculado sobre o custo de cada lote e
+      relatórios que saem em papel, PDF ou Excel. Funciona sem internet e os dados ficam com você.
     </p>
     <div class="btns">
       <!-- Coloque o instalador na mesma pasta deste site para o link funcionar. -->
-      <a class="btn btn--principal" href="https://github.com/Joel92246405/sistema-vendas/releases/latest/download/SistemaVendas_Setup_1.0.1.0_Trial.exe" data-baixar>Baixar avaliação de 30 dias</a>
+      <a class="btn btn--principal" href="https://github.com/Joel92246405/sistema-vendas/releases/latest/download/SistemaVendas_Setup_1.0.2.0_Trial.exe" data-baixar>Baixar avaliação de 30 dias</a>
       <a class="btn btn--zap" href="https://wa.me/5516992467589" target="_blank" rel="noopener">Falar no WhatsApp</a>
     </div>
   </div>
@@ -309,18 +312,63 @@ p{margin:0 0 1em;color:var(--creme-medio)}
         <p>Cada entrada vira um lote com custo e validade próprios. O sistema avisa o que está vencendo e quanto isso representa em dinheiro.</p>
       </article>
       <article class="cartao">
+        <div class="icone">◈</div>
+        <h3>Crediário sem caderno</h3>
+        <p>Fiado parcelado ou caderneta, do jeito que a loja já trabalha. Contas a receber, baixas, estorno e a lista de quem está atrasado.</p>
+      </article>
+      <article class="cartao">
         <div class="icone">▤</div>
         <h3>Relatórios de verdade</h3>
-        <p>Seis relatórios gerenciais com totais, impressão com pré-visualização, PDF pelo Windows e exportação que o Excel abre direto.</p>
+        <p>Nove relatórios gerenciais com totais, impressão com pré-visualização, PDF pelo Windows e exportação que o Excel abre direto.</p>
       </article>
       <article class="cartao">
         <div class="icone">⛭</div>
         <h3>Sem depender da internet</h3>
         <p>Banco de dados local. Cai a internet, você continua vendendo. Backup e restauração ficam no menu, à mão.</p>
       </article>
+      <article class="cartao">
+        <div class="icone">◷</div>
+        <h3>Do tamanho do seu negócio</h3>
+        <p>Instala em um computador comum e abre pronto para usar. Sem servidor, sem implantação, sem consultor.</p>
+      </article>
     </div>
   </div>
 </section>
+
+<section class="secao" id="paraquem">
+  <div class="env">
+    <h2>Para quem é</h2>
+    <p style="max-width:64ch">
+      Foi feito para o comércio pequeno, onde a mesma pessoa vende, compra, confere o estoque
+      e ainda cobra. Se o seu negócio se parece com algum destes, ele serve:
+    </p>
+
+    <div class="requisitos" style="margin-top:2.2rem">
+      <div class="requisito"><b>Mercadinho e mercearia</b><span>Validade e giro sob controle</span></div>
+      <div class="requisito"><b>Roupas, calçados e acessórios</b><span>Crediário e caderneta de cliente</span></div>
+      <div class="requisito"><b>Distribuidora e depósito</b><span>Lote, custo e margem por entrada</span></div>
+      <div class="requisito"><b>Pet shop e casa de rações</b><span>Estoque mínimo e reposição</span></div>
+      <div class="requisito"><b>Material de construção</b><span>Fiado do cliente antigo, organizado</span></div>
+      <div class="requisito"><b>Papelaria, bazar e presentes</b><span>Muitos itens, pouco tempo</span></div>
+      <div class="requisito"><b>Cosméticos e perfumaria</b><span>Validade que não pode passar</span></div>
+      <div class="requisito"><b>Adega, empório e conveniência</b><span>Preço, lucro e vencimento</span></div>
+      <div class="requisito"><b>Autopeças e acessórios</b><span>Muitos códigos, margem por item</span></div>
+      <div class="requisito"><b>Suplementos e nutrição</b><span>Lote e validade na etiqueta</span></div>
+    </div>
+
+    <div class="nota" style="margin-top:2.2rem">
+      <h3>E se o meu ramo não está na lista?</h3>
+      <p>
+        A lista é só exemplo. O sistema serve a qualquer negócio que <b>compra, guarda e revende</b> —
+        inclusive oficina, assistência técnica e prestador que vende peça junto com o serviço.
+        Baixe a avaliação e teste com os seus próprios produtos: são <b>30 dias</b>, sem cadastro
+        e sem cartão.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="fio"></div>
 
 <section class="secao" id="recursos">
   <div class="env">
@@ -345,9 +393,75 @@ p{margin:0 0 1em;color:var(--creme-medio)}
 
     <div class="recurso recurso--invertido">
       <div class="recurso__texto">
+        <div class="olho">Crediário</div>
+        <h2>O fiado da loja, organizado</h2>
+        <p>
+          Na hora de fechar a venda você escolhe <b>parcelado</b>, com vencimentos que dá para
+          negociar ali mesmo, ou <b>caderneta</b> — o cliente leva e vai pagando aos poucos.
+          Antes de confirmar, o sistema avisa em vermelho se ele já deve e se tem parcela vencida.
+        </p>
+        <ul>
+          <li>Parcelas <b>editáveis</b>: mude data e valor, que a conta continua fechando.</li>
+          <li>Aviso do que o cliente já deve, <b>antes</b> de fiar de novo.</li>
+          <li>Os centavos da divisão vão na última parcela — nunca falta um centavo.</li>
+        </ul>
+      </div>
+      <figure class="recurso__figura moldura">
+        <a href="img/crediario.png" target="_blank" rel="noopener">
+          <img src="img/crediario.png" alt="Tela de crediário com escolha entre parcelado e caderneta, parcelas editáveis e aviso de que o cliente já deve" loading="lazy">
+        </a>
+      </figure>
+    </div>
+
+    <div class="recurso">
+      <div class="recurso__texto">
+        <div class="olho">Contas a receber</div>
+        <h2>Quem deve, quanto e desde quando</h2>
+        <p>
+          Todos os títulos numa tela só, com o atraso em dias e a situação destacada.
+          Recebeu? Dá baixa — total ou em parte. Errou? Estorna, e a linha continua lá,
+          riscada, para a conferência do caixa não perder o rastro.
+        </p>
+        <ul>
+          <li>Filtro por cliente, situação e vencimento.</li>
+          <li>Baixa <b>parcial</b>: o cliente paga o que puder, o saldo continua.</li>
+          <li>Histórico de cada recebimento, com forma de pagamento e quem registrou.</li>
+        </ul>
+      </div>
+      <figure class="recurso__figura moldura">
+        <a href="img/contas-receber.png" target="_blank" rel="noopener">
+          <img src="img/contas-receber.png" alt="Tela de contas a receber com títulos, dias de atraso, situação e histórico de recebimentos" loading="lazy">
+        </a>
+      </figure>
+    </div>
+
+    <div class="recurso recurso--invertido">
+      <div class="recurso__texto">
+        <div class="olho">Extrato do cliente</div>
+        <h2>“Quanto eu te devo mesmo?”</h2>
+        <p>
+          A conta corrente do cliente: tudo que ele comprou e tudo que pagou, em ordem,
+          com o saldo acumulado linha a linha. Ele chega dizendo que veio pagar um pouco,
+          você lança o valor e o sistema abate do mais antigo sozinho.
+        </p>
+        <ul>
+          <li>Lista de devedores já ordenada <b>pelo mais atrasado</b>, com telefone à vista.</li>
+          <li>Recebimento por cliente, sem ter que escolher parcela.</li>
+          <li>Extrato <b>impresso ou em PDF</b> para entregar na mão dele.</li>
+        </ul>
+      </div>
+      <figure class="recurso__figura moldura">
+        <a href="img/extrato-cliente.png" target="_blank" rel="noopener">
+          <img src="img/extrato-cliente.png" alt="Extrato do cliente com compras, pagamentos e saldo acumulado linha a linha" loading="lazy">
+        </a>
+      </figure>
+    </div>
+
+    <div class="recurso">
+      <div class="recurso__texto">
         <div class="olho">Relatórios gerenciais</div>
-        <h2>Seis relatórios, três saídas</h2>
-        <p>Faturamento por período, lucro por produto, lucro por lote, ranking de clientes em curva ABC, estoque mínimo e lotes a vencer.</p>
+        <h2>Nove relatórios, três saídas</h2>
+        <p>Faturamento por período, lucro por produto, lucro por lote, ranking de clientes em curva ABC, estoque mínimo, lotes a vencer, contas a receber por vencimento, recebimentos do período e inadimplentes.</p>
         <ul>
           <li><b>Na tela</b>, com totais e colunas ordenáveis.</li>
           <li><b>Impresso ou em PDF</b>, com pré-visualização antes de gastar papel.</li>
@@ -361,7 +475,7 @@ p{margin:0 0 1em;color:var(--creme-medio)}
       </figure>
     </div>
 
-    <div class="recurso">
+    <div class="recurso recurso--invertido">
       <div class="recurso__texto">
         <div class="olho">Impressão</div>
         <h2>Sai pronto para entregar</h2>
@@ -378,7 +492,7 @@ p{margin:0 0 1em;color:var(--creme-medio)}
       </figure>
     </div>
 
-    <div class="recurso recurso--invertido">
+    <div class="recurso">
       <div class="recurso__texto">
         <div class="olho">Venda</div>
         <h2>Rápida, e sem vender o que não tem</h2>
@@ -396,7 +510,7 @@ p{margin:0 0 1em;color:var(--creme-medio)}
       </figure>
     </div>
 
-    <div class="recurso">
+    <div class="recurso recurso--invertido">
       <div class="recurso__texto">
         <div class="olho">Estoque</div>
         <h2>O que falta e o que está vencendo</h2>
@@ -452,10 +566,24 @@ p{margin:0 0 1em;color:var(--creme-medio)}
       </figure>
 
       <figure class="tela">
+        <a class="moldura" href="img/contas-receber.png" target="_blank" rel="noopener" style="display:block">
+          <img src="img/contas-receber.png" alt="Contas a receber com títulos, atraso em dias e histórico de baixas" loading="lazy">
+        </a>
+        <figcaption><b>Contas a Receber</b>Títulos do crediário com atraso em dias, baixa parcial e estorno com rastro.</figcaption>
+      </figure>
+
+      <figure class="tela">
+        <a class="moldura" href="img/extrato-cliente.png" target="_blank" rel="noopener" style="display:block">
+          <img src="img/extrato-cliente.png" alt="Extrato do cliente com compras, pagamentos e saldo acumulado" loading="lazy">
+        </a>
+        <figcaption><b>Extrato do Cliente</b>Comprou, pagou e saldo linha a linha. Recebimento abate do título mais antigo.</figcaption>
+      </figure>
+
+      <figure class="tela">
         <a class="moldura" href="img/relatorios.png" target="_blank" rel="noopener" style="display:block">
           <img src="img/relatorios.png" alt="Tela de relatórios gerenciais" loading="lazy">
         </a>
-        <figcaption><b>Relatórios</b>Seis relatórios com atalhos de período e saída para papel, PDF ou Excel.</figcaption>
+        <figcaption><b>Relatórios</b>Nove relatórios com atalhos de período e saída para papel, PDF ou Excel.</figcaption>
       </figure>
 
       <figure class="tela">
@@ -490,7 +618,7 @@ p{margin:0 0 1em;color:var(--creme-medio)}
         </ol>
 
         <div class="btns">
-          <a class="btn btn--principal" href="https://github.com/Joel92246405/sistema-vendas/releases/latest/download/SistemaVendas_Setup_1.0.1.0_Trial.exe" data-baixar>Baixar agora</a>
+          <a class="btn btn--principal" href="https://github.com/Joel92246405/sistema-vendas/releases/latest/download/SistemaVendas_Setup_1.0.2.0_Trial.exe" data-baixar>Baixar agora</a>
         </div>
       </div>
 
@@ -561,7 +689,7 @@ p{margin:0 0 1em;color:var(--creme-medio)}
     <ol class="passos">
       <li>
         <b>Abra o arquivo baixado</b>
-        <span>Procure <b>SistemaVendas_Setup_1.0.1.0_Trial.exe</b> na pasta Downloads e dê dois cliques.</span>
+        <span>Procure <b>SistemaVendas_Setup_1.0.2.0_Trial.exe</b> na pasta Downloads e dê dois cliques.</span>
       </li>
       <li>
         <b>O Windows vai avisar</b>

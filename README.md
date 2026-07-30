@@ -33,8 +33,10 @@ arquivo desse tamanho. Ele vai como anexo de *Release*:
    rejeita o que você digita:
 
    ```bash
-   git tag v1.0.2 && git push origin v1.0.2
+   git tag v1.0.3 && git push origin v1.0.3
    ```
+
+   A página aponta hoje para `SistemaVendas_Setup_1.0.2.0_Trial.exe`.
 
 2. Em **Releases** → *Draft a new release*, **selecione a tag na lista**.
 3. Anexe o instalador e espere o upload dos 50 MB terminar antes de publicar.
@@ -53,7 +55,10 @@ anexo da release mais recente. Como o nome do arquivo carrega a versão, o passo
 
 As capturas usam a base de demonstração. A tela de Clientes teve CPF, telefone,
 e-mail e endereço substituídos por marcadores (`000.000.000-00`,
-`cliente@exemplo.com`) antes de entrar aqui.
+`cliente@exemplo.com`) antes de entrar aqui. No **Extrato do Cliente**, o
+telefone do rodapé foi mascarado para `(16) 99999-0000` — trocado no rótulo
+antes de desenhar a tela, e não editando o pixel depois, para o texto sair com
+a mesma fonte do resto da imagem.
 
 **Print novo que mostre dado pessoal passa pelo mesmo tratamento antes de subir.**
 
