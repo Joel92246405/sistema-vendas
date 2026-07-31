@@ -250,6 +250,39 @@ p{margin:0 0 1em;color:var(--creme-medio)}
   border-top:1px solid rgba(251,146,60,.14);
   font-size:.9rem;color:var(--creme-fraco);
 }
+
+/* Etapas do diálogo: pedir o e-mail e, depois, explicar a instalação.
+   Sem o formulário configurado o JS pula direto para a segunda. */
+.dialogo [data-etapa]{display:none}
+.dialogo[data-fase="email"] [data-etapa="email"]{display:block}
+.dialogo[data-fase="instrucoes"] [data-etapa="instrucoes"]{display:block}
+
+.campo{
+  width:100%;padding:.85rem 1rem;margin-top:.35rem;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(237,232,222,.22);
+  border-radius:12px;
+  color:var(--creme);font-size:1rem;font-family:inherit;
+}
+.campo:focus{outline:none;border-color:var(--laranja)}
+.campo::placeholder{color:var(--creme-fraco)}
+
+.rotulo-campo{display:block;font-weight:600;font-size:.95rem;color:var(--creme);margin-top:1rem}
+.opcional{font-weight:400;font-size:.82rem;color:var(--creme-fraco)}
+
+/* Nome e WhatsApp lado a lado só quando há largura; empilham no celular. */
+.dupla{display:grid;gap:.9rem}
+@media (min-width:520px){.dupla{grid-template-columns:1fr 1fr}}
+
+.aceite{
+  display:flex;gap:.6rem;align-items:flex-start;
+  margin-top:1.1rem;font-size:.9rem;color:var(--creme-fraco);cursor:pointer;
+}
+.aceite input{margin-top:.2rem;accent-color:var(--laranja);width:1.05rem;height:1.05rem;flex:none}
+
+.erro{
+  margin:.9rem 0 0;font-size:.9rem;color:#fca5a5;min-height:1.2em;
+}
 .porque b{color:var(--creme)}
 .fechar{
   position:absolute;top:.9rem;right:1rem;
@@ -292,8 +325,8 @@ p{margin:0 0 1em;color:var(--creme-medio)}
     </p>
     <div class="btns">
       <!-- Coloque o instalador na mesma pasta deste site para o link funcionar. -->
-      <a class="btn btn--principal" href="https://github.com/Joel92246405/sistema-vendas/releases/latest/download/SistemaVendas_Setup_1.0.2.0_Trial.exe" data-baixar>Baixar avaliação de 30 dias</a>
-      <a class="btn btn--zap" href="https://wa.me/5516992467589" target="_blank" rel="noopener">Falar no WhatsApp</a>
+      <a class="btn btn--principal" href="https://github.com/Joel92246405/sistema-vendas/releases/latest/download/SistemaVendas_Setup_1.0.3.0.exe" data-baixar>Baixar avaliação de 30 dias</a>
+      <a class="btn btn--zap" href="mailto:joelmnascimento88@gmail.com?subject=Sistema%20de%20Vendas">Falar comigo por e-mail</a>
     </div>
   </div>
 </section>
@@ -613,12 +646,16 @@ p{margin:0 0 1em;color:var(--creme-medio)}
           </li>
           <li>
             <b>Decida sem pressa</b>
-            <span>O sistema mostra quantos dias restam a cada abertura. Terminando o prazo, é só falar comigo para liberar.</span>
+            <span>O sistema mostra quantos dias restam a cada abertura. Nada de cadastro, cartão ou cobrança automática no fim do prazo.</span>
+          </li>
+          <li>
+            <b>Gostou? É só ativar</b>
+            <span>Comprando, você recebe um código. Abre <b>Arquivo → Ativar Licença</b>, me manda o código do computador e eu devolvo a licença. Vale para 2 computadores e não precisa de internet depois.</span>
           </li>
         </ol>
 
         <div class="btns">
-          <a class="btn btn--principal" href="https://github.com/Joel92246405/sistema-vendas/releases/latest/download/SistemaVendas_Setup_1.0.2.0_Trial.exe" data-baixar>Baixar agora</a>
+          <a class="btn btn--principal" href="https://github.com/Joel92246405/sistema-vendas/releases/latest/download/SistemaVendas_Setup_1.0.3.0.exe" data-baixar>Baixar agora</a>
         </div>
       </div>
 
@@ -655,15 +692,14 @@ p{margin:0 0 1em;color:var(--creme-medio)}
     <p>Atendimento direto com quem desenvolve o sistema — sem fila, sem chamado, sem robô.</p>
 
     <div class="btns">
-      <a class="btn btn--principal" href="https://wa.me/5516992467589" target="_blank" rel="noopener">Chamar no WhatsApp</a>
-      <a class="btn btn--zap" href="mailto:joelmnascimento88@gmail.com?subject=Sistema%20de%20Vendas">Mandar e-mail</a>
+      <a class="btn btn--principal" href="mailto:joelmnascimento88@gmail.com?subject=Sistema%20de%20Vendas">Mandar e-mail</a>
     </div>
 
     <p class="assinatura">
       <b>Joel Nascimento</b> — Desenvolvedor<br>
-      WhatsApp <a href="https://wa.me/5516992467589" target="_blank" rel="noopener">(16) 99246-7589</a>
-      &nbsp;·&nbsp;
       <a href="mailto:joelmnascimento88@gmail.com">joelmnascimento88@gmail.com</a>
+      &nbsp;·&nbsp;
+      respondo de 1 a 3 dias úteis
     </p>
   </div>
 </section>
@@ -677,19 +713,65 @@ p{margin:0 0 1em;color:var(--creme-medio)}
   </div>
 </footer>
 
-<!-- Aparece depois do clique em baixar. O download acontece do mesmo jeito:
-     este aviso só explica a tela do Windows que vem a seguir. -->
+<!-- Aparece ao clicar em baixar. Duas etapas: o e-mail e, depois, o aviso do
+     SmartScreen. Sem o formulário configurado no script, a primeira é pulada e
+     o download acontece direto, como antes. -->
 <div class="veu" id="veuInstalacao" role="dialog" aria-modal="true" aria-labelledby="tituloAviso">
-  <div class="dialogo">
+  <div class="dialogo" id="dialogoBaixar" data-fase="instrucoes">
     <button class="fechar" type="button" data-fechar aria-label="Fechar">&times;</button>
 
+    <div data-etapa="email">
+      <h3>Quase lá</h3>
+      <p>Deixe seu e-mail e o download começa em seguida.</p>
+
+      <form id="formEmail" novalidate>
+        <label class="rotulo-campo" for="campoEmail">Seu e-mail</label>
+        <input class="campo" id="campoEmail" name="email" type="email"
+               placeholder="voce@exemplo.com" autocomplete="email" required>
+
+        <div class="dupla">
+          <div>
+            <label class="rotulo-campo" for="campoNome">Nome <span class="opcional">opcional</span></label>
+            <input class="campo" id="campoNome" type="text" placeholder="como te chamo"
+                   autocomplete="name">
+          </div>
+          <div>
+            <label class="rotulo-campo" for="campoZap">WhatsApp <span class="opcional">opcional</span></label>
+            <input class="campo" id="campoZap" type="tel" placeholder="(00) 00000-0000"
+                   autocomplete="tel">
+          </div>
+        </div>
+
+        <label class="aceite">
+          <input type="checkbox" id="campoAceite">
+          <span>Aceito receber contato sobre o Sistema de Vendas — avisos de atualização
+          e novidades. Sem isso, uso seu e-mail só para este download.</span>
+        </label>
+
+        <p class="erro" id="erroEmail" role="alert"></p>
+
+        <div class="btns" style="margin-top:1.2rem">
+          <button class="btn btn--principal" type="submit">Liberar download</button>
+        </div>
+      </form>
+
+      <p class="porque">
+        <b>O que eu faço com isso?</b> O e-mail identifica o download. Marcando o aceite,
+        também te aviso quando sai correção ou função nova — e você sai da lista quando
+        quiser, pedindo em
+        <a href="mailto:joelmnascimento88@gmail.com">joelmnascimento88@gmail.com</a>.
+        Não repasso seus dados para ninguém.
+      </p>
+    </div>
+
+    <div data-etapa="instrucoes">
     <h3 id="tituloAviso">O download começou</h3>
     <p>São 50 MB. Enquanto baixa, leia isto — vai te poupar um susto.</p>
 
     <ol class="passos">
       <li>
         <b>Abra o arquivo baixado</b>
-        <span>Procure <b>SistemaVendas_Setup_1.0.2.0_Trial.exe</b> na pasta Downloads e dê dois cliques.</span>
+        <span>Procure <b>SistemaVendas_Setup_1.0.3.0.exe</b> na pasta Downloads e dê dois cliques.</span>
       </li>
       <li>
         <b>O Windows vai avisar</b>
@@ -706,29 +788,128 @@ p{margin:0 0 1em;color:var(--creme-medio)}
     <p class="porque">
       <b>Por que esse aviso?</b> O Windows exibe essa tela para todo programa novo que
       ainda não comprou um certificado de assinatura digital. Ele não diz que há vírus —
-      diz que ainda não conhece o programa. Se preferir, me chame no WhatsApp e eu
+      diz que ainda não conhece o programa. Se preferir, me escreva e eu
       acompanho a instalação com você.
     </p>
 
     <div class="btns">
-      <a class="btn btn--zap" href="https://wa.me/5516992467589" target="_blank" rel="noopener">Preciso de ajuda</a>
+      <a class="btn btn--zap" href="mailto:joelmnascimento88@gmail.com?subject=Ajuda%20na%20instala%C3%A7%C3%A3o">Preciso de ajuda</a>
       <button class="btn btn--principal" type="button" data-fechar>Entendi</button>
+    </div>
     </div>
   </div>
 </div>
 
 <script>
 (function(){
+  // ------------------------------------------------------------------
+  // CAPTURA DE CONTATO — vai para um formulário do Google, que grava numa
+  // planilha do Joel. Sem biblioteca, sem chave de API, sem serviço de
+  // terceiro no meio.
+  //
+  // Formulário: "JN Soluções - Sistema de Vendas e Estoque"
+  //
+  // ATENÇÃO ao mexer no formulário: todo campo marcado como OBRIGATÓRIO lá
+  // precisa ser enviado aqui. O Google não responde a chamadas de outra
+  // origem, então uma recusa dele é INVISÍVEL — o visitante veria o download
+  // liberado e a planilha ficaria vazia, sem nada avisando.
+  //
+  // Hoje são obrigatórios: E-mail e o aceite (que sempre vai, "Sim" ou "Não").
+  //
+  // Para descobrir os códigos de um campo novo: menu de três pontos do
+  // formulário > "Obter link pré-preenchido" > preencher > "Obter link".
+  // O link traz entry.NNNN=valor para cada campo.
+  // ------------------------------------------------------------------
+  var ENDERECO = 'https://docs.google.com/forms/d/e/1FAIpQLSd9K7lIm2BTKN5wcKI6nAMXFWf1HiOhuUwl3sC7KpN97bYZeg/formResponse';
+  var CAMPO_EMAIL = 'entry.399285852';
+  var CAMPO_NOME = 'entry.1380806128';
+  var CAMPO_ZAP = 'entry.895260593';
+  var CAMPO_ACEITE = 'entry.1773159061';
+
   var veu = document.getElementById('veuInstalacao');
   if (!veu) return;
 
-  function abrir(){ veu.setAttribute('data-aberto','1'); }
+  var dialogo = document.getElementById('dialogoBaixar');
+  var formulario = document.getElementById('formEmail');
+  var campoEmail = document.getElementById('campoEmail');
+  var campoNome = document.getElementById('campoNome');
+  var campoZap = document.getElementById('campoZap');
+  var campoAceite = document.getElementById('campoAceite');
+  var erro = document.getElementById('erroEmail');
+
+  var pedirEmail = !!(ENDERECO && CAMPO_EMAIL);
+  var destino = '';
+
+  function abrir(fase){
+    dialogo.setAttribute('data-fase', fase);
+    veu.setAttribute('data-aberto','1');
+    if (fase === 'email') campoEmail.focus();
+  }
+
   function fechar(){ veu.removeAttribute('data-aberto'); }
 
-  // Sem preventDefault: o navegador baixa o arquivo e o aviso aparece por cima.
+  function baixar(){
+    if (!destino) return;
+    var link = document.createElement('a');
+    link.href = destino;
+    link.rel = 'noopener';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
+
   document.querySelectorAll('[data-baixar]').forEach(function(botao){
-    botao.addEventListener('click', function(){ setTimeout(abrir, 400); });
+    botao.addEventListener('click', function(e){
+      destino = botao.getAttribute('href');
+
+      if (!pedirEmail){
+        // Sem preventDefault: o navegador baixa e o aviso aparece por cima.
+        setTimeout(function(){ abrir('instrucoes'); }, 400);
+        return;
+      }
+
+      e.preventDefault();
+      erro.textContent = '';
+      formulario.reset();
+      abrir('email');
+    });
   });
+
+  if (formulario){
+    formulario.addEventListener('submit', function(e){
+      e.preventDefault();
+
+      var email = campoEmail.value.trim();
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){
+        erro.textContent = 'Confira o e-mail — parece que falta alguma coisa.';
+        campoEmail.focus();
+        return;
+      }
+
+      // O aceite NÃO trava o download. Ele é consentimento para contato de
+      // marketing, e consentimento que só existe porque foi exigido em troca
+      // do arquivo não vale grande coisa — nem para a LGPD, nem na prática.
+      // O e-mail continua obrigatório: é o que identifica o download.
+      var dados = new FormData();
+      dados.append(CAMPO_EMAIL, email);
+      dados.append(CAMPO_ACEITE, campoAceite.checked ? 'Sim' : 'Não');
+
+      if (campoNome && campoNome.value.trim()) dados.append(CAMPO_NOME, campoNome.value.trim());
+      if (campoZap && campoZap.value.trim()) dados.append(CAMPO_ZAP, campoZap.value.trim());
+
+      // O formulário do Google não responde a chamadas de outra origem, então
+      // não dá para saber se gravou. Segue em frente de qualquer jeito: prender
+      // o cliente porque o envio falhou custa muito mais que um e-mail perdido.
+      // Bloqueador de anúncio derruba esta requisição com frequência.
+      try {
+        fetch(ENDERECO, { method:'POST', mode:'no-cors', body:dados }).catch(function(){});
+      } catch (_) { /* segue */ }
+
+      abrir('instrucoes');
+      baixar();
+    });
+  }
 
   veu.addEventListener('click', function(e){
     if (e.target === veu || e.target.hasAttribute('data-fechar')) fechar();

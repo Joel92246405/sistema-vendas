@@ -33,10 +33,14 @@ arquivo desse tamanho. Ele vai como anexo de *Release*:
    rejeita o que você digita:
 
    ```bash
-   git tag v1.0.3 && git push origin v1.0.3
+   git tag v1.0.4 && git push origin v1.0.4
    ```
 
-   A página aponta hoje para `SistemaVendas_Setup_1.0.2.0_Trial.exe`.
+   A página aponta hoje para `SistemaVendas_Setup_1.0.3.0.exe`.
+
+   **A partir da 1.0.3 existe um instalador só.** Não há mais versão "Trial"
+   separada: quem instala começa em avaliação e vira licenciado ativando dentro
+   do sistema. O mesmo arquivo serve ao download da página e à entrega da venda.
 
 2. Em **Releases** → *Draft a new release*, **selecione a tag na lista**.
 3. Anexe o instalador e espere o upload dos 50 MB terminar antes de publicar.
@@ -61,6 +65,45 @@ antes de desenhar a tela, e não editando o pixel depois, para o texto sair com
 a mesma fonte do resto da imagem.
 
 **Print novo que mostre dado pessoal passa pelo mesmo tratamento antes de subir.**
+
+## Pedir o e-mail antes do download
+
+O diálogo que abre ao clicar em Baixar tem duas etapas: o e-mail e o aviso do
+SmartScreen. **A primeira vem desligada** — enquanto as constantes no fim do
+`index.html` estiverem vazias, o download acontece direto, como sempre.
+
+Para ligar, crie um formulário do Google com dois campos (e-mail e uma caixa de
+aceite) e pegue três valores:
+
+1. No formulário: menu de três pontos → **Obter link pré-preenchido**
+2. Preencha qualquer coisa e clique em **Obter link**
+3. O link copiado é assim:
+
+   ```
+   https://docs.google.com/forms/d/e/SEU_ID/viewform?usp=pp_url&entry.111111=x&entry.222222=y
+   ```
+
+   - troque `/viewform?...` por `/formResponse` → é o `ENDERECO`
+   - `entry.111111` é o `CAMPO_EMAIL`
+   - `entry.222222` é o `CAMPO_ACEITE`
+
+Cole os três no bloco do `<script>`, no fim do `index.html`.
+
+**Por que formulário do Google e não Firebase:** os dois guardam o dado na
+Google de qualquer jeito, então a independência que o Firebase daria é menor do
+que parece. O que muda é o risco. Uma regra de segurança errada no Firestore
+deixa **a lista inteira de e-mails aberta para qualquer um baixar**, em silêncio.
+Aqui o pior caso é perder um e-mail.
+
+**Se o envio falhar, o download libera assim mesmo.** Bloqueador de anúncio
+derruba essa requisição com frequência, e prender o cliente por causa de um
+formulário quebrado custa mais que a lista.
+
+## Contato: só e-mail
+
+O WhatsApp saiu da página, do sistema e do instalador em 30/07/2026. Canal
+aberto com número pessoal dentro de binário distribuído não se desfaz depois.
+Se um dia voltar, que seja um número separado.
 
 ## O código-fonte do sistema não está aqui
 
