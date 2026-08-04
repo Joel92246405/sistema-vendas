@@ -293,6 +293,38 @@ p{margin:0 0 1em;color:var(--creme-medio)}
 .dialogo .btns{margin-top:1.8rem}
 
 /* ---------- rodapé ---------- */
+/* ---------- preço ----------
+   O valor grande sozinho assusta; a parcela sozinha esconde o total. Os dois
+   aparecem juntos, e o total fica escrito por extenso ao lado da parcela para
+   ninguém precisar multiplicar de cabeça. */
+.preco{display:grid;gap:2.2rem;align-items:start;margin-top:2.4rem}
+@media (min-width:900px){.preco{grid-template-columns:.92fr 1.08fr}}
+
+.preco__cartao{
+  background:var(--vidro);border:1px solid rgba(251,146,60,.3);
+  border-radius:var(--raio);padding:clamp(1.6rem,4vw,2.2rem);
+  box-shadow:0 22px 64px rgba(0,0,0,.55);
+  text-align:center;
+}
+.preco__valor{display:flex;align-items:flex-start;justify-content:center;gap:.35rem;margin:.5rem 0 0}
+.preco__moeda{font-size:1.35rem;font-weight:700;color:var(--creme-medio);margin-top:.75rem}
+.preco__numero{
+  font-size:clamp(3.4rem,9vw,4.6rem);line-height:1;font-weight:800;
+  color:#fff;letter-spacing:-.02em;
+}
+.preco__parcela{margin:.9rem 0 0;color:var(--creme-medio);font-size:1.02rem}
+.preco__parcela b{color:var(--ouro)}
+.preco__unico{margin:.5rem 0 0;font-size:.9rem;color:var(--creme-fraco)}
+.preco__itens{list-style:none;margin:1.7rem 0 1.6rem;padding:0;text-align:left}
+.preco__itens li{position:relative;padding-left:1.75rem;margin-bottom:.72rem;color:var(--creme-medio);font-size:.96rem}
+.preco__itens li::before{content:"✓";position:absolute;left:0;top:0;color:var(--laranja);font-weight:800}
+.preco__itens b{color:var(--creme)}
+.preco__cartao .btn{display:block;width:100%}
+.preco__pgto{margin:1rem 0 0;font-size:.85rem;color:var(--creme-fraco)}
+.preco__lado h3{margin:0 0 .55rem;color:#fff}
+.preco__lado p{color:var(--creme-medio);margin:0}
+.preco__lado p + h3{margin-top:1.9rem}
+
 .rodape{padding:2.2rem 0;font-size:.88rem;color:var(--creme-fraco);border-top:1px solid rgba(251,146,60,.1)}
 .rodape__int{display:flex;gap:1rem;flex-wrap:wrap;justify-content:space-between}
 </style>
@@ -306,6 +338,7 @@ p{margin:0 0 1em;color:var(--creme-medio)}
       <a href="#paraquem">Para quem é</a>
       <a href="#recursos">Recursos</a>
       <a href="#telas">Telas</a>
+      <a href="#preco">Preço</a>
       <a href="#avaliacao">Avaliação</a>
       <a href="#contato">Contato</a>
     </nav>
@@ -328,6 +361,10 @@ p{margin:0 0 1em;color:var(--creme-medio)}
       <a class="btn btn--principal" href="https://github.com/Joel92246405/sistema-vendas/releases/latest/download/SistemaVendas_Setup_1.0.4.0.exe" data-baixar>Baixar avaliação de 30 dias</a>
       <a class="btn btn--zap" href="https://pay.hotmart.com/A106967075A" target="_blank" rel="noopener">Já quero a licença</a>
     </div>
+    <p style="margin:1.2rem 0 0;font-size:.95rem;color:var(--creme-fraco)">
+      Licença definitiva por <b style="color:var(--ouro)">R$ 297</b> ou 12x de R$ 24,75 —
+      pagamento único, sem mensalidade. <a href="#preco">Ver o que está incluído</a>.
+    </p>
   </div>
 </section>
 
@@ -628,6 +665,72 @@ p{margin:0 0 1em;color:var(--creme-medio)}
     </div>
   </div>
 </section>
+
+<section class="secao" id="preco">
+  <div class="env">
+    <h2>Quanto custa</h2>
+    <p style="max-width:64ch">
+      Um pagamento só. <b>Não é assinatura:</b> não vence, não renova sozinho e não
+      cobra de novo no mês que vem. Você compra o sistema, não o aluguel dele.
+    </p>
+
+    <div class="preco">
+      <div class="preco__cartao">
+        <span class="selo" style="margin-bottom:.6rem"><b>●</b> Licença definitiva</span>
+
+        <div class="preco__valor">
+          <span class="preco__moeda">R$</span>
+          <span class="preco__numero">297</span>
+        </div>
+
+        <p class="preco__parcela">ou <b>12x de R$ 24,75</b></p>
+        <p class="preco__unico">O parcelamento não aumenta o total: 12 × R$ 24,75 = R$ 297,00.</p>
+
+        <ul class="preco__itens">
+          <li><b>Sem prazo de validade</b> — pagou, é seu</li>
+          <li>Vale para <b>2 computadores</b>: o do balcão e o de casa</li>
+          <li>Reinstalar no mesmo computador <b>não gasta ativação</b></li>
+          <li>Trocar de computador é <b>gratuito</b>, é só pedir</li>
+          <li>Suporte por e-mail <b>com quem desenvolve</b>, em 1 a 3 dias úteis</li>
+          <li>Funciona <b>sem internet</b> depois de ativado</li>
+        </ul>
+
+        <a class="btn btn--principal" href="https://pay.hotmart.com/A106967075A" target="_blank" rel="noopener">Comprar a licença</a>
+
+        <p class="preco__pgto">
+          Pagamento pelo Hotmart: cartão de crédito, Pix, boleto ou PayPal.
+        </p>
+      </div>
+
+      <div class="preco__lado">
+        <h3>Por que pagamento único e não mensalidade</h3>
+        <p>
+          Sistema de loja pequena que cobra todo mês vira despesa fixa num lugar onde
+          o mês bom e o mês ruim são bem diferentes. Aqui você paga uma vez e o
+          programa continua funcionando — inclusive se você parar de falar comigo.
+          Os dados ficam no seu computador, num banco que você mesmo faz backup.
+        </p>
+
+        <h3>Teste os 30 dias antes de decidir</h3>
+        <p>
+          A avaliação tem <b>todos os recursos liberados</b> e não pede cartão. O que
+          você lançar durante o teste <b>continua lá</b> depois de ativar a licença:
+          não precisa reinstalar nem recomeçar o cadastro.
+        </p>
+
+        <h3>O que ele não faz</h3>
+        <p>
+          Para você não gastar dinheiro esperando outra coisa: este sistema
+          <b>não emite nota fiscal eletrônica</b>, <b>não tem aplicativo de celular</b>
+          e <b>não funciona em nuvem</b>. É um programa para Windows, instalado no
+          seu computador.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="fio"></div>
 
 <section class="secao" id="avaliacao">
   <div class="env">
