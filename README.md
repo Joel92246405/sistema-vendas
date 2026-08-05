@@ -36,7 +36,7 @@ arquivo desse tamanho. Ele vai como anexo de *Release*:
    git tag v1.0.4 && git push origin v1.0.4
    ```
 
-   A página aponta hoje para `SistemaVendas_Setup_1.0.4.0.exe`.
+   A página aponta hoje para `SistemaVendas_Setup_1.0.5.0.exe`.
 
    **A partir da 1.0.3 existe um instalador só.** Não há mais versão "Trial"
    separada: quem instala começa em avaliação e vira licenciado ativando dentro
