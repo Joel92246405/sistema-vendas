@@ -325,6 +325,39 @@ p{margin:0 0 1em;color:var(--creme-medio)}
 .preco__lado p{color:var(--creme-medio);margin:0}
 .preco__lado p + h3{margin-top:1.9rem}
 
+/* ---------- vídeos ----------
+   Miniatura do YouTube em vez de player embutido: um <iframe> por vídeo
+   carrega o player inteiro sete vezes e derruba a abertura da página no
+   celular. A miniatura é uma imagem; o player só aparece se a pessoa clicar. */
+.videos{
+  display:grid;gap:1.4rem;margin-top:2.2rem;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+}
+.video{
+  display:block;text-decoration:none;color:inherit;
+  border:1px solid var(--linha);border-radius:var(--raio);overflow:hidden;
+  background:var(--vidro);
+  transition:transform .14s ease, border-color .14s ease;
+}
+.video:hover{transform:translateY(-3px);border-color:rgba(251,146,60,.4)}
+/* display:block é obrigatório: são <span> dentro do <a> (link não pode conter
+   <div>), e span inline ignora aspect-ratio e object-fit — sem isto a
+   miniatura sai 4:3 com tarja preta e o título nem aparece. */
+.video__capa{display:block;position:relative;aspect-ratio:16/9;background:#0f0b06;overflow:hidden}
+.video__capa img{width:100%;height:100%;object-fit:cover;display:block}
+.video__play{
+  position:absolute;inset:0;display:grid;place-items:center;
+  background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.5));
+}
+.video__play span{
+  width:54px;height:54px;border-radius:50%;
+  background:var(--destaque);color:#1c1200;
+  display:grid;place-items:center;font-size:1.1rem;padding-left:4px;
+  box-shadow:0 6px 24px rgba(0,0,0,.5);
+}
+.video__nome{display:block;padding:.95rem 1.1rem;font-weight:700;color:#fff;font-size:1rem}
+.video__nome small{display:block;font-weight:400;color:var(--creme-fraco);font-size:.85rem;margin-top:.2rem}
+
 .rodape{padding:2.2rem 0;font-size:.88rem;color:var(--creme-fraco);border-top:1px solid rgba(251,146,60,.1)}
 .rodape__int{display:flex;gap:1rem;flex-wrap:wrap;justify-content:space-between}
 </style>
@@ -338,6 +371,7 @@ p{margin:0 0 1em;color:var(--creme-medio)}
       <a href="#paraquem">Para quem é</a>
       <a href="#recursos">Recursos</a>
       <a href="#telas">Telas</a>
+      <a href="#videos">Vídeos</a>
       <a href="#preco">Preço</a>
       <a href="#avaliacao">Avaliação</a>
       <a href="#contato">Contato</a>
@@ -665,6 +699,80 @@ p{margin:0 0 1em;color:var(--creme-medio)}
     </div>
   </div>
 </section>
+
+<section class="secao" id="videos">
+  <div class="env">
+    <h2>Veja funcionando</h2>
+    <p style="max-width:62ch">
+      Vídeos curtos com a tela de verdade, gravados por quem desenvolve. Dá para
+      julgar o sistema antes de baixar qualquer coisa.
+    </p>
+
+    <div class="videos">
+      <a class="video" href="https://youtu.be/OYGxEm23Mro" target="_blank" rel="noopener">
+        <span class="video__capa">
+          <img src="https://i.ytimg.com/vi/OYGxEm23Mro/hqdefault.jpg" alt="Vídeo: fazendo uma venda no sistema" loading="lazy">
+          <span class="video__play"><span>▶</span></span>
+        </span>
+        <span class="video__nome">Venda<small>Do produto ao fechamento do pedido</small></span>
+      </a>
+
+      <a class="video" href="https://youtu.be/zXJJ7un6x5Q" target="_blank" rel="noopener">
+        <span class="video__capa">
+          <img src="https://i.ytimg.com/vi/zXJJ7un6x5Q/hqdefault.jpg" alt="Vídeo: vendendo no crediário e dando baixa" loading="lazy">
+          <span class="video__play"><span>▶</span></span>
+        </span>
+        <span class="video__nome">Crediário<small>Parcelar, carnê e receber depois</small></span>
+      </a>
+
+      <a class="video" href="https://youtu.be/fuAw77UqsY8" target="_blank" rel="noopener">
+        <span class="video__capa">
+          <img src="https://i.ytimg.com/vi/fuAw77UqsY8/hqdefault.jpg" alt="Vídeo: cadastrando produtos com lote e validade" loading="lazy">
+          <span class="video__play"><span>▶</span></span>
+        </span>
+        <span class="video__nome">Cadastrar produtos<small>Preço, lote e validade</small></span>
+      </a>
+
+      <a class="video" href="https://youtu.be/dzxSC30q_K0" target="_blank" rel="noopener">
+        <span class="video__capa">
+          <img src="https://i.ytimg.com/vi/dzxSC30q_K0/hqdefault.jpg" alt="Vídeo: cadastrando um cliente" loading="lazy">
+          <span class="video__play"><span>▶</span></span>
+        </span>
+        <span class="video__nome">Cadastro de cliente<small>Quem compra fiado tem ficha</small></span>
+      </a>
+
+      <a class="video" href="https://youtu.be/Nl6JmB1ck_M" target="_blank" rel="noopener">
+        <span class="video__capa">
+          <img src="https://i.ytimg.com/vi/Nl6JmB1ck_M/hqdefault.jpg" alt="Vídeo: gerando relatórios gerenciais" loading="lazy">
+          <span class="video__play"><span>▶</span></span>
+        </span>
+        <span class="video__nome">Relatórios<small>Papel, PDF ou Excel</small></span>
+      </a>
+
+      <a class="video" href="https://youtu.be/QhDCPZIrNaM" target="_blank" rel="noopener">
+        <span class="video__capa">
+          <img src="https://i.ytimg.com/vi/QhDCPZIrNaM/hqdefault.jpg" alt="Vídeo: login e cadastro de usuários com permissões" loading="lazy">
+          <span class="video__play"><span>▶</span></span>
+        </span>
+        <span class="video__nome">Login e usuários<small>Cada um vê só o que você liberar</small></span>
+      </a>
+
+      <a class="video" href="https://youtu.be/9sTEzKQ3-RI" target="_blank" rel="noopener">
+        <span class="video__capa">
+          <img src="https://i.ytimg.com/vi/9sTEzKQ3-RI/hqdefault.jpg" alt="Vídeo: ativando a licença do sistema" loading="lazy">
+          <span class="video__play"><span>▶</span></span>
+        </span>
+        <span class="video__nome">Ativação da licença<small>Como funciona depois de comprar</small></span>
+      </a>
+    </div>
+
+    <div class="btns" style="margin-top:2rem">
+      <a class="btn btn--zap" href="https://www.youtube.com/@JNSolu%C3%A7%C3%B5es" target="_blank" rel="noopener">Ver o canal no YouTube</a>
+    </div>
+  </div>
+</section>
+
+<div class="fio"></div>
 
 <section class="secao" id="preco">
   <div class="env">
